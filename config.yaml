@@ -1,0 +1,7 @@
+version: 3
+endpoint: https://organic-walrus-48.hasura.app
+admin_secret: x5iXT0eKNPz2bb3Vczp3nMiT2D7edc07bMkIKTXkaLjjBWDWCucOhj0O1cS0NqQ5
+metadata_directory: metadata
+actions:
+  kind: synchronous
+  handler_webhook_baseurl: http://localhost:3000
