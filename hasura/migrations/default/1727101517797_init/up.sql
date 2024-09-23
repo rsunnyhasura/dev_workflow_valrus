@@ -21,6 +21,18 @@ CREATE TYPE public.guardrail_rule_action_type AS ENUM (
     'Blocked',
     'Redacted'
 );
+CREATE TABLE expt.kyle_table (
+    kyle_id integer NOT NULL,
+    kyle_note text NOT NULL
+);
+CREATE SEQUENCE expt.kyle_table_kyle_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE expt.kyle_table_kyle_id_seq OWNED BY expt.kyle_table.kyle_id;
 CREATE TABLE expt.test (
     test_id integer NOT NULL,
     type text NOT NULL
@@ -57,6 +69,31 @@ CREATE SEQUENCE public."Chetan_one_chetan_id_seq"
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public."Chetan_one_chetan_id_seq" OWNED BY public."Chetan_one".chetan_id;
+CREATE TABLE public."TUV_Workflow_Session" (
+    workflow_id integer NOT NULL,
+    workflow_name text NOT NULL
+);
+CREATE SEQUENCE public."TUV_Workflow_Session_workflow_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public."TUV_Workflow_Session_workflow_id_seq" OWNED BY public."TUV_Workflow_Session".workflow_id;
+CREATE TABLE public.apple_soft_delete_test (
+    record_id integer NOT NULL,
+    record_value text NOT NULL,
+    record_status boolean NOT NULL
+);
+CREATE SEQUENCE public.apple_soft_delete_test_record_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.apple_soft_delete_test_record_id_seq OWNED BY public.apple_soft_delete_test.record_id;
 CREATE TABLE public.comments (
     id integer NOT NULL,
     post_id integer,
@@ -215,9 +252,12 @@ CREATE SEQUENCE public.verra_demo_verra_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.verra_demo_verra_id_seq OWNED BY public.verra_demo.verra_id;
+ALTER TABLE ONLY expt.kyle_table ALTER COLUMN kyle_id SET DEFAULT nextval('expt.kyle_table_kyle_id_seq'::regclass);
 ALTER TABLE ONLY expt.test ALTER COLUMN test_id SET DEFAULT nextval('expt.test_test_id_seq'::regclass);
 ALTER TABLE ONLY private.enum_test ALTER COLUMN enum_id SET DEFAULT nextval('private.enum_test_enum_id_seq'::regclass);
 ALTER TABLE ONLY public."Chetan_one" ALTER COLUMN chetan_id SET DEFAULT nextval('public."Chetan_one_chetan_id_seq"'::regclass);
+ALTER TABLE ONLY public."TUV_Workflow_Session" ALTER COLUMN workflow_id SET DEFAULT nextval('public."TUV_Workflow_Session_workflow_id_seq"'::regclass);
+ALTER TABLE ONLY public.apple_soft_delete_test ALTER COLUMN record_id SET DEFAULT nextval('public.apple_soft_delete_test_record_id_seq'::regclass);
 ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
 ALTER TABLE ONLY public.demo_table ALTER COLUMN demo_id SET DEFAULT nextval('public.demo_table_demo_id_seq'::regclass);
 ALTER TABLE ONLY public.enum_test ALTER COLUMN enum_id SET DEFAULT nextval('public.enum_test_enum_id_seq'::regclass);
@@ -230,12 +270,18 @@ ALTER TABLE ONLY public.sbg_demo_one ALTER COLUMN demo_one_id SET DEFAULT nextva
 ALTER TABLE ONLY public.supriya_demo ALTER COLUMN supriya_id SET DEFAULT nextval('public.supriya_demo_supriya_id_seq'::regclass);
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 ALTER TABLE ONLY public.verra_demo ALTER COLUMN verra_id SET DEFAULT nextval('public.verra_demo_verra_id_seq'::regclass);
+ALTER TABLE ONLY expt.kyle_table
+    ADD CONSTRAINT kyle_table_pkey PRIMARY KEY (kyle_id);
 ALTER TABLE ONLY expt.test
     ADD CONSTRAINT test_pkey PRIMARY KEY (test_id);
 ALTER TABLE ONLY private.enum_test
     ADD CONSTRAINT enum_test_pkey PRIMARY KEY (enum_id);
 ALTER TABLE ONLY public."Chetan_one"
     ADD CONSTRAINT "Chetan_one_pkey" PRIMARY KEY (chetan_id);
+ALTER TABLE ONLY public."TUV_Workflow_Session"
+    ADD CONSTRAINT "TUV_Workflow_Session_pkey" PRIMARY KEY (workflow_id);
+ALTER TABLE ONLY public.apple_soft_delete_test
+    ADD CONSTRAINT apple_soft_delete_test_pkey PRIMARY KEY (record_id);
 ALTER TABLE ONLY public.comments
     ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.demo_table

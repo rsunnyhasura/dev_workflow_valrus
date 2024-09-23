@@ -1,0 +1,3 @@
+table:
+  name: TUV_Workflow_Session
+  schema: public
