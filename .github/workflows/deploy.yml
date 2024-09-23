@@ -1,0 +1,16 @@
+name: CI                        # Workflow name (can be anything)
+on:                             # On any push to the main branch
+  push:
+    branches:
+      - "main"
+jobs:                           # Run a job
+  build:                        # called `build`
+    runs-on: ubuntu-latest      # On an Ubuntu VM
+    steps:                      # with these steps
+      - uses: actions/checkout@v3 # checkout the repository
+      - uses: actions/setup-node@v4 # make sure node is set up
+        with:                       # with
+          node-version: '20'        # a particular version
+      - run: curl -L https://github.com/hasura/graphql-engine/raw/master/cli/get.sh | bash
+      - run: hasura deploy --endpoint https://organic-walrus-48.hasura.app --admin-secret x5iXT0eKNPz2bb3Vczp3nMiT2D7edc07bMkIKTXkaLjjBWDWCucOhj0O1cS0NqQ5 . # then use the hasura CLI to deploy using repository secrets
+      - run: hasura metadata reload --endpoint https://organic-walrus-48.hasura.app --admin-secret x5iXT0eKNPz2bb3Vczp3nMiT2D7edc07bMkIKTXkaLjjBWDWCucOhj0O1cS0NqQ5 .
